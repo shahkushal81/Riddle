@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riddle Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #6bc286;
+            color: #000000;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #f8c778cc;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 10px rgb(0, 0, 0);
+        }
+        .riddle {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+        .reveal-answer {
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Riddle Game</h1>
+        <div class="riddle" id="riddle">I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?</div>
+        <input type="text" id="answer" placeholder="Enter your answer here">
+        <button onclick="checkAnswer()">Submit</button>
+        <div class="result" id="result"></div>
+        <button class="reveal-answer" id="revealAnswer" onclick="revealCorrectAnswer()">Reveal Answer</button>
+        <button class="next-riddle" onclick="nextRiddle()">Next Riddle</button>
+    </div>
+
+    <script>
+        const riddles = [
+            { question: "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?", answer: "echo" },
+            { question: "The more of this you take, the more you leave behind. What is it?", answer: "footsteps" },
+            { question: "What has to be broken before you can use it?", answer: "egg" },
+            { question: "I’m tall when I’m young, and I’m short when I’m old. What am I?", answer: "candle" },
+            { question: "What comes once in a minute, twice in a moment, but never in a thousand years?", answer: "m" },
+            { question: "What has many keys but can’t open a single lock?", answer: "piano" },
+            { question: "What can you break, even if you never pick it up or touch it?", answer: "promise" },
+            { question: "What has hands, but can’t clap?", answer: "clock" },
+            { question: "What has an eye but cannot see?", answer: "needle" },
+            { question: "What begins with T, ends with T, and has T in it?", answer: "teapot" },
+            { question: "What can travel around the world while staying in a corner?", answer: "stamp" },
+            { question: "What has a head, a tail, but no body?", answer: "coin" },
+            { question: "What is full of holes but still holds water?", answer: "sponge" },
+            { question: "What gets wetter the more it dries?", answer: "towel" },
+            { question: "What is always in front of you but can’t be seen?", answer: "future" },
+            { question: "What has a thumb and four fingers but is not alive?", answer: "glove" },
+            { question: "What has a neck but no head?", answer: "bottle" },
+            { question: "What is so fragile that saying its name breaks it?", answer: "silence" },
+            { question: "What begins with an E, ends with an E, but only contains one letter?", answer: "envelope" },
+            { question: "What has roots as nobody sees, is taller than trees, up, up it goes, and yet it never grows?", answer: "mountain" },
+            { question: "The more you take, the more you leave behind. What am I?", answer: "footsteps" },
+            { question: "What has cities, but no houses; forests, but no trees; and rivers, but no water?", answer: "map" },
+            { question: "What has words, but never speaks?", answer: "book" },
+            { question: "What has a bottom at the top?", answer: "leg" },
+            { question: "What has a ring but no finger?", answer: "phone" },
+            { question: "What has a bed but never sleeps?", answer: "river" }
+            
+        ];
+
+        let currentRiddleIndex = 0;
+        let attempts = 0;
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
+            const correctAnswer = riddles[currentRiddleIndex].answer;
+            const resultDiv = document.getElementById('result');
+            const revealButton = document.getElementById('revealAnswer');
+
+            if (userAnswer === correctAnswer) {
+                resultDiv.textContent = "Correct! Well done!";
+                resultDiv.style.color = "green";
+                attempts = 0; // Reset attempts for the next riddle
+            } else {
+                attempts++;
+                resultDiv.textContent = "Wrong answer. Try again!";
+                resultDiv.style.color = "red";
+
+                if (attempts >= 3) {
+                    revealButton.style.display = "inline-block";
+                }
+            }
+        }
+
+        function revealCorrectAnswer() {
+            const resultDiv = document.getElementById('result');
+            const correctAnswer = riddles[currentRiddleIndex].answer;
+            resultDiv.textContent = `The correct answer is: ${correctAnswer}`;
+            resultDiv.style.color = "blue";
+        }
+
+        function nextRiddle() {
+            attempts = 0; // Reset attempts
+            currentRiddleIndex = (currentRiddleIndex + 1) % riddles.length;
+            document.getElementById('riddle').textContent = riddles[currentRiddleIndex].question;
+            document.getElementById('answer').value = "";
+            document.getElementById('result').textContent = "";
+            document.getElementById('revealAnswer').style.display = "none";
+        }
+    </script>
+    <footer style="position: fixed; bottom: 5px; right: 10px; font-size: 1.5em; color: #353333;">
+    Kushal Shah
+    </footer>
+</body>
+</html>
